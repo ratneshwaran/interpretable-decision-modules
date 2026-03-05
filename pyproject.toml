@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "interpretable-decision-modules"
+version = "0.1.0"
+description = "Research prototype for interpretable decision pipelines combining fuzzy inference, ML predictions, and evidence fusion"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "scikit-learn>=1.3",
+    "fastapi>=0.104",
+    "uvicorn>=0.24",
+    "jinja2>=3.1",
+    "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "httpx>=0.25",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["data*", "models*", "fuzzy*", "fusion*", "explain*", "api*", "audit*", "reports*"]
