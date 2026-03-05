@@ -76,10 +76,40 @@ demo.py        end-to-end pipeline demonstration
 ## Quickstart
 
 ```bash
+# Install dependencies
 pip install -e ".[dev]"
+
+# Generate dataset and train model
+python data/generate.py
+python -c "import sys; sys.path.insert(0,'.'); from models.risk_model import train_and_save; train_and_save()"
+
+# Run end-to-end demo with explanations
 python demo.py
-uvicorn api.app:app --reload
+
+# Start the API server
+uvicorn api.app:app --reload --port 8000
 ```
+
+## Running Tests
+
+```bash
+pytest tests/ -v
+```
+
+## Module Reference
+
+| Module | Purpose |
+|--------|---------|
+| `data/generate.py` | Synthetic dataset with realistic procurement risk distributions |
+| `models/risk_model.py` | GradientBoosting classifier, feature importance extraction |
+| `fuzzy/membership.py` | Trapezoidal/shoulder membership functions for 4 features |
+| `fuzzy/rules.py` | 10 Mamdani IF-THEN rules, centroid defuzzification |
+| `fusion/evidence.py` | Weighted consensus + Dempster-Shafer accumulation |
+| `explain/bundle.py` | ExplanationBundle with feature/rule/fusion contributions |
+| `audit/logger.py` | JSONL audit log with full decision traces |
+| `reports/generator.py` | Jinja2 HTML reports per decision |
+| `api/pipeline.py` | Pipeline orchestrator wiring all stages |
+| `api/app.py` | FastAPI REST endpoint |
 
 ## API
 
